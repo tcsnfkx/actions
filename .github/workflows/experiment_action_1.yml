@@ -1,0 +1,20 @@
+name: Test Experiment Action 1
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  experiment-action-1-test:
+    name: Experiment Action 1 Test
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Check out revision
+        uses: actions/checkout@v2
+
+      - name: Bazel build
+        uses: ./experiment_action_1
+        with:
+          input-string: DESIRED

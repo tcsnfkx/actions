@@ -1,0 +1,22 @@
+name: Experiment GitHub Action 1
+description: An experimental GitHub Action.
+
+inputs:
+  input-string:
+    description: The input string will be compared against the desired string in the binary.
+    required: true
+    default: ''
+
+runs:
+  steps:
+    - name: Check out revision
+      uses: actions/checkout@v2
+      with:
+        repository: tcsnfkx/actions
+        path: tcsnfkx_actions
+
+    - name: Bazel build experiment action 1.
+      run: bazel build -c opt //experiment_action_1/src/main/experiment_action_1:experiment_action_1
+
+    - name: Run experiment action 1.
+      run: ${{ github.workspace }}/bazel-bin/src/main/experiment_action_1/experiment_action_1 --input=${{ inputs.input-string }}
