@@ -14,7 +14,13 @@ jobs:
       - name: Check out revision
         uses: actions/checkout@v2
 
-      - name: Bazel build
+      - name: Check GitHub Workspace
+        run: |
+          echo "Workspace dir:"
+          echo "${{ github.workspace }}" |
+          tree ${{ github.workspace }}
+
+      - name: Run experiment action 1
         uses: ./experiment_action_1
         with:
           input-string: DESIRED
