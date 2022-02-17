@@ -8,6 +8,7 @@ inputs:
     default: ''
 
 runs:
+  using: composite
   steps:
     - name: Check out revision
       uses: actions/checkout@v2
@@ -15,8 +16,24 @@ runs:
         repository: tcsnfkx/actions
         path: tcsnfkx_actions
 
+    - name: Check GitHub Workspace 1
+      shell: bash
+      run: |
+        echo "Workspace dir:"
+        echo "${{ github.workspace }}" |
+        tree ${{ github.workspace }}
+
     - name: Bazel build experiment action 1.
-      run: bazel build -c opt //experiment_action_1/src/main/experiment_action_1:experiment_action_1
+      shell: bash
+      run: bazel build -c opt //tcsnfkx_actions/src/main/experiment_action_1:experiment_action_1
+
+    - name: Check GitHub Workspace 2
+      shell: bash
+      run: |
+        echo "Workspace dir:"
+        echo "${{ github.workspace }}" |
+        tree ${{ github.workspace }}
 
     - name: Run experiment action 1.
-      run: ${{ github.workspace }}/bazel-bin/src/main/experiment_action_1/experiment_action_1 --input=${{ inputs.input-string }}
+      shell: bash
+      run: ${{ github.workspace }}/bazel-bin/tcsnfkx_actions/src/main/experiment_action_1/experiment_action_1 --input=${{ inputs.input-string }}
