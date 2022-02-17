@@ -20,20 +20,23 @@ runs:
       shell: bash
       run: |
         echo "Workspace dir:"
-        echo "${{ github.workspace }}" |
+        echo "${{ github.workspace }}"
         tree ${{ github.workspace }}
 
     - name: Bazel build experiment action 1.
       shell: bash
-      run: bazel build -c opt //tcsnfkx_actions/src/main/experiment_action_1:experiment_action_1
+      run: |
+        cd ./tcsnfkx_actions
+        bazel build -c opt //src/main/experiment_action_1:experiment_action_1
+        cd ..
 
     - name: Check GitHub Workspace 2
       shell: bash
       run: |
         echo "Workspace dir:"
-        echo "${{ github.workspace }}" |
+        echo "${{ github.workspace }}"
         tree ${{ github.workspace }}
 
     - name: Run experiment action 1.
       shell: bash
-      run: ${{ github.workspace }}/bazel-bin/tcsnfkx_actions/src/main/experiment_action_1/experiment_action_1 --input=${{ inputs.input-string }}
+      run: ${{ github.workspace }}/tcsnfkx_actions/bazel-bin/src/main/experiment_action_1/experiment_action_1 --input=${{ inputs.input-string }}
